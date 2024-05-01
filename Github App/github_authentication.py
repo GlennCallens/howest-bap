@@ -38,7 +38,7 @@ def get_installation_id():
     return response.json()['id']
 
 
-def github_authenticate():
+def get_token():
     # Get the token for the app.
     installation_id = get_installation_id()
     jwt = generate_jwt()
