@@ -1,5 +1,4 @@
 import requests
-from github_authentication import get_token
 
 url = "https://api.github.com"
 
