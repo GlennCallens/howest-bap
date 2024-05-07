@@ -1,4 +1,5 @@
 # First generate a JWT token with our private key.
+import os
 import time
 
 import requests
@@ -10,7 +11,7 @@ app_id = 889013
 
 def generate_jwt():
     # Generate a JWT Token with our private key.
-    pem = open('cert/key_app.pem', 'rb')
+    pem = open(os.getenv('CERT_PATH'), 'rb')
     signing_key = jwk_from_pem(pem.read())
 
     payload = {
