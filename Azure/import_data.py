@@ -15,9 +15,8 @@ from models.InsertDocument import InsertDocument
 load_dotenv('.env')
 
 
-def get_file_paths():
+def get_file_paths(root_dir: str):
     print("🏃 Started getting file paths.")
-    root_dir = "//Users//glenncallens//PycharmProjects//DelawareCodeSearch//pythonProject//SonarReport"
 
     docs = []
 
@@ -158,9 +157,9 @@ def embed_content(index_name, model: InsertDocument):
     }])
 
 
-def run():
+def run(root_dir: str):
     print("✅ Project started.")
-    file_paths = get_file_paths()
+    file_paths = get_file_paths(root_dir)
     print("✅ File paths collected.")
     llm = AzureChatOpenAI(deployment_name="gpt-4",
                           azure_endpoint=os.getenv('AZURE_OPENAI_BASE_URL'),
@@ -175,6 +174,3 @@ def run():
         print("     🔍 Started embedding file " + str(i) + "/" + str(len(docs)) + " .")
         print("         📁 " + doc.file_name + " .")
         embed_file(doc)
-
-
-run()
