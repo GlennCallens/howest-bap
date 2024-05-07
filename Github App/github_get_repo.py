@@ -12,7 +12,9 @@ def get_contents(token, repository_name):
         'X-GitHub-Api-Version': '2022-11-28'
     }
 
-    response = requests.request("GET", url + "/repos/glenncallens/" + repository_name + "/zipball/main", headers=headers,
+    response = requests.request("GET",
+                                url + "/repos/glenncallens/" + repository_name + "/zipball/main",
+                                headers=headers,
                                 data=payload)
 
     if response.status_code == 200:
