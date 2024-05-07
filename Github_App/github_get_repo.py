@@ -18,7 +18,7 @@ def get_contents(token, repository_name):
                                 data=payload)
 
     if response.status_code == 200:
-        with open('temp.zip', 'wb') as f:
+        with open('../temp.zip', 'wb') as f:
             for chunk in response.iter_content(chunk_size=128):
                 f.write(chunk)
         print("success")
