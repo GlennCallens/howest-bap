@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 from ai.import_data import import_repo
 from github.download_repo import download_repo
+from github.scan_issues import scan
 
 load_dotenv('.env')
 app = func.FunctionApp()
@@ -39,4 +40,23 @@ def http_trigger(req: func.HttpRequest) -> func.HttpResponse:
     return func.HttpResponse(
         "Import failed",
         status_code=500
+    )
+
+
+@app.route(route="scan_projects")
+def scan_projects(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request for scan projects.')
+
+    repo = req.params.get('repo')
+
+    if not repo:
+        return func.HttpResponse(
+            "Invalid Request: Scan projects needs 1 argument: repository name",
+            status_code=400
+        )
+
+    scan(repo)
+    return func.HttpResponse(
+        "Scan successfully",
+        status_code=200
     )
