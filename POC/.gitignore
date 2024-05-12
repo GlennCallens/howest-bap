@@ -2,3 +2,4 @@
 .idea/**
 local.settings.json
 cert/**
+.env
