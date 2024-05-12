@@ -62,7 +62,8 @@ def comment_on_issue(repo: str, issue_number: int):
     token = authenticate(os.getenv('CERT_PATH'), os.getenv('GITHUB_APP_ID'), os.getenv('GITHUB_API_URL'))
 
     payload = {
-        "body": "Do you want me to propose code here? \n [ ✅ Yes](http://localhost:7071/api/propose_code)"
+        "body": "Do you want me to propose code here? \n [ ✅ Yes](http://localhost:7071/api/get_solution?repo="
+                + repo + "&issue_number=" + str(issue_number)
     }
 
     headers = {

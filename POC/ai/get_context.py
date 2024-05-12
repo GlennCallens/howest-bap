@@ -42,10 +42,8 @@ def get_file(index_name, file_name):
 def search(question: str, repo: str):
     index_name = "index-" + repo
     context = get_context(index_name, question)
-    logging.error(context)
     result = {}
     for file in context:
-        print(file)
         result[file] = get_file(index_name + "-content", file)
 
     return result

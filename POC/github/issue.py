@@ -25,7 +25,7 @@ def get_issue(repo: str, issue_number: str):
 
     if response.status_code == 200:
         json_response = response.json()
-        return json_response['title'] + " " + json_response['body']
+        return json_response['title']
     else:
         logging.error(f"Failed to get issue  HTTP Status Code: {response.status_code}")
         return []
@@ -35,7 +35,7 @@ def post_comment_with_solution(repo: str, issue_number: str, comment: str):
     token = authenticate(os.getenv('CERT_PATH'), os.getenv('GITHUB_APP_ID'), os.getenv('GITHUB_API_URL'))
 
     payload = json.dumps({
-        "body": comment
+        "body": "```" + comment + "```"
     })
     headers = {
         'Accept': 'application/vnd.github+json',

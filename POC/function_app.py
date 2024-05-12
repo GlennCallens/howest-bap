@@ -1,16 +1,13 @@
+import logging
 import os.path
 
 import azure.functions as func
-import logging
-
 from dotenv import load_dotenv
 
+from ai.get_solution import post_solution
 from ai.import_data import import_repo
 from github.download_repo import download_repo
-from github.issue import get_issue, post_comment_with_solution
 from github.scan_issues import scan
-from ai.get_context import search
-from ai.get_solution import get_solution, decide_file
 
 load_dotenv('.env')
 app = func.FunctionApp()
@@ -77,13 +74,8 @@ def get_solution(req: func.HttpRequest) -> func.HttpResponse:
             "Invalid Request: Get solution needs 2 arguments: repository name and issue number",
             status_code=400
         )
-    question = get_issue(repo, issue_number)
 
-    context = search(question, repo)
-    file = decide_file(question, context)
-    solution = get_solution(question, context[file])
-
-    post_comment_with_solution(repo, issue_number, solution)
+    post_solution(repo, issue_number)
 
     return func.HttpResponse(
         "Solution added.",

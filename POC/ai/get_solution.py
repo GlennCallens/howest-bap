@@ -3,6 +3,9 @@ import os
 from langchain_community.chat_models import AzureChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
+from ai.get_context import search
+from github.issue import get_issue, post_comment_with_solution
+
 
 def get_solution(question, context):
     system = SystemMessage("""
@@ -33,3 +36,11 @@ def decide_file(question, context):
                           temperature=0)
 
     return llm(messages=[system, HumanMessage(question)]).content
+
+
+def post_solution(repo: str, issue_number: str):
+    question = get_issue(repo, issue_number)
+    context = search(question, repo)
+    file = decide_file(question, context)
+    solution = get_solution(question, context[file])
+    post_comment_with_solution(repo, issue_number, solution)
