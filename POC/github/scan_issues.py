@@ -63,7 +63,7 @@ def comment_on_issue(repo: str, issue_number: int):
 
     payload = {
         "body": "Do you want me to propose code here? \n [ ✅ Yes](http://localhost:7071/api/get_solution?repo="
-                + repo + "&issue_number=" + str(issue_number)
+                + repo + "&issue_number=" + str(issue_number) + ")"
     }
 
     headers = {
