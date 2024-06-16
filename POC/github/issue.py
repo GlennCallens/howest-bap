@@ -35,7 +35,8 @@ def post_comment_with_solution(repo: str, issue_number: str, comment: str):
     token = authenticate(os.getenv('CERT_PATH'), os.getenv('GITHUB_APP_ID'), os.getenv('GITHUB_API_URL'))
 
     payload = json.dumps({
-        "body": "```" + comment + "```"
+        "body": "```" + comment + "`` \n Import into project? \n [Yes](http://localhost:7071/api/commit_solution?repo="
+                + repo + ")`"
     })
     headers = {
         'Accept': 'application/vnd.github+json',
