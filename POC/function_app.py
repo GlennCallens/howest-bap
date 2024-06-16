@@ -4,6 +4,7 @@ import os.path
 import azure.functions as func
 from dotenv import load_dotenv
 
+from github.commit import create_commit
 from ai.get_solution import post_solution
 from ai.import_data import import_repo
 from github.download_repo import download_repo
@@ -79,5 +80,25 @@ def get_solution(req: func.HttpRequest) -> func.HttpResponse:
 
     return func.HttpResponse(
         "Solution added.",
+        status_code=200
+    )
+
+@app.route(route="commit_solution")
+def commit_solution(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request for commit solution.')
+
+    repo = req.params.get('repo')
+    content = req.params.get('content')
+
+    if not repo:
+        return func.HttpResponse(
+            "Invalid Request: Commit solution needs 2 arguments: repository name and content",
+            status_code=400
+        )
+
+    create_commit(repo, "Solution added", content)
+
+    return func.HttpResponse(
+        "Solution committed.",
         status_code=200
     )
